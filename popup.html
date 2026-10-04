@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+    body {
+      width: 300px;
+      min-width: 300px;
+      margin: 0;
+      padding: 10px;
+      background: #0d0b12;
+      color: #99e550;
+      font: 16px/1.25 VT323, Consolas, monospace;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+    .tag-toggle {
+      width: 100%;
+      margin: 0 0 4px;
+      background: #222034;
+      color: #99e550;
+      border: 1px solid #99e550;
+      padding: 6px 8px;
+      font: 15px VT323, monospace;
+      text-align: left;
+      cursor: pointer;
+    }
+    .tags { display: none; }
+    .tags.open { display: block; }
+    .aw-tag {
+      width: 100%;
+      background: transparent;
+      border: 0;
+      color: inherit;
+      cursor: pointer;
+      text-align: left;
+      font: inherit;
+      padding: 2px 0;
+    }
+    .aw-tag:hover { background: #2e2c42; }
+    .fields { display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px; }
+    .fields input {
+      width: 100%;
+      padding: 6px 8px;
+      font-size: 15px;
+    }
+    .row {
+      display: flex;
+      align-items: stretch;
+      margin: 3px 0;
+      cursor: pointer;
+    }
+    .num {
+      width: 22px;
+      border: 1px solid #99e550;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 4px;
+      flex-shrink: 0;
+      background: #222034;
+    }
+    .lab {
+      flex: 1;
+      border: 1px solid #99e550;
+      padding: 4px 8px;
+      background: #222034;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      min-height: 24px;
+    }
+    .lab span { color: #6a8a4a; }
+    .on { color: #99e550; }
+    .off { color: #6a8a4a; }
+    .hint { font-size: 12px; color: #6a8a4a; margin: 8px 0 4px; }
+    .tags { margin: 4px 0 8px; border: 1px solid #99e550; background: #222034; padding: 6px 8px; max-height: 168px; overflow: auto; }
+    .aw-tag { display: flex; gap: 8px; font-size: 12px; line-height: 1.35; margin: 2px 0; }
+    .aw-tag code { color: #99e550; min-width: 108px; font-family: inherit; }
+    .aw-tag span { color: #6a8a4a; }
+    .actions { display: flex; flex-direction: column; gap: 4px; margin-top: 8px; }
+    .actions button {
+      width: 100%;
+      background: #222034;
+      color: #99e550;
+      border: 1px solid #99e550;
+      padding: 7px;
+      font: 15px VT323, monospace;
+    }
+    .actions button:hover { background: #2e2c42; }
+    .actions button.primary { background: #99e550; color: #222034; }
+    .actions button.danger { background: #b42323; color: #fff; border-color: #ff6b6b; }
+    .actions button.danger:hover { background: #8e1b1b; color: #fff; }
+    .actions button.violet { background: #6d28d9; color: #fff; border-color: #c4b5fd; }
+    .actions button.violet:hover { background: #5b21b6; color: #fff; }
+    .actions.row2 { flex-direction: row; }
+    #status { min-height: 16px; text-align: center; font-size: 13px; margin-top: 4px; opacity: 0; }
+    #status.show { opacity: 1; }
+    input[type="range"] { width: 88px; accent-color: #99e550; }
+    .pick { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin: 3px 0 8px; }
+    .pick button {
+      background: #222034;
+      color: #6a8a4a;
+      border: 1px solid #99e550;
+      font: 13px VT323, monospace;
+      padding: 6px 4px;
+    }
+    .pick button.on { background: #99e550; color: #222034; }
+  </style>
+</head>
+<body>
+  <h1>AWF_saveMaster</h1>
+
+  <div class="fields">
+    <input id="customPath" type="text" maxlength="60" placeholder="subfolder name" title="S2 — folder inside Downloads">
+    <input id="renameTemplate" type="text" maxlength="80" placeholder="media_{date}_{counter}" title="S4 — rename template">
+  </div>
+  <button type="button" id="tagToggle" class="tag-toggle">name tags</button>
+  <div id="tagLegend" class="tags"></div>
+
+  <label class="row" data-key="blockAlt"><div class="num">1</div><div class="lab">block alt opera <span id="v-blockAlt"></span></div></label>
+  <label class="row" data-key="highlightEnabled"><div class="num">2</div><div class="lab">highlight media <span id="v-highlightEnabled"></span></div></label>
+  <label class="row" data-key="saveAsPng"><div class="num">3</div><div class="lab">save as PNG <span id="v-saveAsPng"></span></div></label>
+  <label class="row" data-key="customPathEnabled"><div class="num">4</div><div class="lab">save to subfolder <span id="v-customPathEnabled"></span></div></label>
+  <label class="row" data-key="renameEnabled"><div class="num">5</div><div class="lab">rename files <span id="v-renameEnabled"></span></div></label>
+  <label class="row" data-key="copyMediaFile"><div class="num">6</div><div class="lab">copy file (off=url) <span id="v-copyMediaFile"></span></div></label>
+  <label class="row" data-key="interceptImages"><div class="num">7</div><div class="lab">intercept image tabs <span id="v-interceptImages"></span></div></label>
+  <div class="row"><div class="num">8</div><div class="lab">toast ms <input id="toastMs" type="range" min="1500" max="10000" step="500"><span id="v-toastMs"></span></div></div>
+  <div class="row"><div class="num">9</div><div class="lab">hold menu <input id="holdMenuMs" type="range" min="400" max="2000" step="50"><span id="v-holdMenuMs"></span></div></div>
+  <div class="row"><div class="num">10</div><div class="lab">tab menu size <input id="altMenuScale" type="range" min="50" max="140" step="5"><span id="v-altMenuScale"></span></div></div>
+  <div class="row"><div class="num">11</div><div class="lab">MMB zoom hold <input id="zoomHoldMs" type="range" min="400" max="2000" step="50"><span id="v-zoomHoldMs"></span></div></div>
+  <div class="hint">2nd hold — tab menu</div>
+  <div class="pick" id="altHoldMode">
+    <button type="button" data-v="x1">same</button>
+    <button type="button" data-v="x1.5">×1.5</button>
+    <button type="button" data-v="x2">×2</button>
+    <button type="button" data-v="plus1500">+1.5s</button>
+  </div>
+
+  <div class="hint">debug</div>
+  <div class="pick" id="pierceMode">
+    <button type="button" data-v="auto">pierce auto</button>
+    <button type="button" data-v="off">pierce off</button>
+  </div>
+  <div class="actions">
+    <button type="button" class="danger" id="fixHistory">repair history</button>
+    <button type="button" class="danger" id="fixFormat">repair format</button>
+  </div>
+
+  <div class="actions">
+    <button type="button" id="shortcuts">browser hotkey page</button>
+    <button type="button" id="restore">reopen last images</button>
+    <button type="button" class="primary" id="save">save settings</button>
+    <button type="button" class="violet" id="devLogs">copy devLogs</button>
+  </div>
+  <div id="status"></div>
+  <div class="actions row2">
+    <button type="button" class="violet" id="importSet">import set</button>
+    <button type="button" class="violet" id="exportSet">export set</button>
+  </div>
+  <input id="importFile" type="file" accept="application/json,.json" hidden>
+  <script src="settings.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
