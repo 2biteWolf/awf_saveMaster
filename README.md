@@ -20,6 +20,7 @@ Ten presets, rename patterns, PNG or original format, zoom, and wheel tab switch
 - media viewer with adaptive media scale
 - save image history
 - scrolling browser tabs with mmb
+- zoom media with press mmb
 
 ## Hotkeys
 
