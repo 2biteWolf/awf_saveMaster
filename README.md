@@ -22,10 +22,10 @@ Ten presets, rename patterns, PNG or original format, zoom, and wheel tab switch
 
 ## Install
 
-> download from [google extenshion store] (https://chromewebstore.google.com/detail/awfsavemaster/nlnfkeiodggocfnlfceihjmilojliija?)
+1. download from [google extenshion store] (https://chromewebstore.google.com/detail/awfsavemaster/nlnfkeiodggocfnlfceihjmilojliija?)
 or
-> download repository
->> unzip archive in folder
->>> open [chrome ext] (chrome://extensions/) or [operaGX ext] (opera://extensions)
->>> load unpacked - select repo folder
+1. download repository
+2. unzip archive in folder
+3. open [chrome ext] (chrome://extensions/) or [operaGX ext] (opera://extensions)
+4. load unpacked - select repo folder
 
