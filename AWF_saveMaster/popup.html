@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+    body {
+      width: 340px;
+      min-width: 340px;
+      margin: 0;
+      padding: 12px 12px 14px;
+      background: #0d0b12;
+      color: #99e550;
+      font: 18px/1.45 VT323, Consolas, monospace;
+    }
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 400;
+      letter-spacing: 1px;
+      color: #f4ffe4;
+      text-shadow: 1px 0 0 #f4ffe4;
+    }
+    h2 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      color: #f4ffe4;
+      text-shadow: 1px 0 0 #f4ffe4;
+    }
+    .langs { display: flex; gap: 4px; }
+    .langs button, .key, .pick button, .actions button, .tag-toggle {
+      background: #222034;
+      color: #99e550;
+      border: 1px solid #99e550;
+      font: 18px/1.2 VT323, Consolas, monospace;
+      cursor: pointer;
+    }
+    .langs button { padding: 4px 10px; }
+    .langs button.on, .pick button.on { background: #99e550; color: #222034; }
+    section { margin: 0 0 16px; }
+    .panel {
+      background: #222034;
+      border: 1px solid #99e550;
+      padding: 8px;
+    }
+    .key {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      text-align: left;
+      padding: 6px 8px;
+      margin: 0 0 4px;
+    }
+    .key b { color: #f4ffe4; font-weight: 400; }
+    .key.main { padding: 8px 10px; font-size: 20px; }
+    .key.rec { outline: 1px solid #f4ffe4; }
+    .fields { display: flex; flex-direction: column; gap: 6px; }
+    .fields input, .panel input[type="text"] {
+      width: 100%;
+      padding: 6px 8px;
+      font-size: 18px;
+    }
+    .tag-toggle { width: 100%; margin-top: 6px; padding: 6px 8px; text-align: left; }
+    .tags { display: none; margin-top: 6px; max-height: 160px; overflow: auto; }
+    .tags.open { display: block; }
+    .aw-tag {
+      width: 100%;
+      display: flex;
+      gap: 8px;
+      background: transparent;
+      border: 0;
+      color: inherit;
+      cursor: pointer;
+      text-align: left;
+      font: 16px/1.35 VT323, Consolas, monospace;
+      padding: 3px 0;
+    }
+    .aw-tag code { color: #99e550; min-width: 108px; font-family: inherit; }
+    .aw-tag span, .hint, .row b.off { color: #9dcc78; }
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 5px 2px;
+      cursor: pointer;
+    }
+    .row b { font-weight: 400; }
+    .row b.on { color: #99e550; }
+    .slider {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 5px 2px;
+    }
+    .slider span { color: #9dcc78; }
+    input[type="range"] { width: 108px; accent-color: #99e550; }
+    .hint { font-size: 16px; margin: 8px 0 4px; }
+    .pick { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+    .pick button { padding: 6px 4px; }
+    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+    .actions button { padding: 7px 8px; white-space: normal; line-height: 1.15; }
+    .actions button:hover, .key:hover, .langs button:hover, .tag-toggle:hover { background: #2e2c42; }
+    .actions button.primary { background: #99e550; color: #222034; }
+    .actions button.danger { background: #b42323; color: #fff; border-color: #ff6b6b; }
+    .actions button.violet { background: #6d28d9; color: #fff; border-color: #c4b5fd; }
+    .wide { grid-column: 1 / -1; }
+    #status { min-height: 22px; text-align: center; font-size: 16px; margin-top: 8px; color: #9dcc78; }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <h1>AWF_saveMaster</h1>
+    <div class="langs">
+      <button type="button" id="lang-ru">RU</button>
+      <button type="button" id="lang-en">EN</button>
+    </div>
+  </div>
+
+  <section>
+    <h2 data-i="secKeys"></h2>
+    <button type="button" class="key main" data-bind="keySave"><span data-i="keySave"></span><b id="k-keySave"></b></button>
+    <button type="button" class="key" data-bind="keyPin"><span data-i="keyPin"></span><b id="k-keyPin"></b></button>
+    <button type="button" class="key" data-bind="keyOpen"><span data-i="keyOpen"></span><b id="k-keyOpen"></b></button>
+    <button type="button" class="key" data-bind="keyCopy"><span data-i="keyCopy"></span><b id="k-keyCopy"></b></button>
+    <button type="button" class="key" data-bind="keySave2"><span data-i="keySave2"></span><b id="k-keySave2"></b></button>
+  </section>
+
+  <section>
+    <h2 data-i="secPath"></h2>
+    <div class="fields">
+      <input id="customPath" type="text" maxlength="60">
+      <input id="renameTemplate" type="text" maxlength="80">
+    </div>
+    <button type="button" id="tagToggle" class="tag-toggle" data-i="nameTags"></button>
+    <div id="tagLegend" class="tags"></div>
+  </section>
+
+  <section>
+    <h2 data-i="secHow"></h2>
+    <div class="panel">
+      <label class="row" data-key="blockAlt"><span data-i="blockAlt"></span><b id="v-blockAlt"></b></label>
+      <label class="row" data-key="highlightEnabled"><span data-i="highlight"></span><b id="v-highlightEnabled"></b></label>
+      <label class="row" data-key="saveAsPng"><span data-i="png"></span><b id="v-saveAsPng"></b></label>
+      <label class="row" data-key="customPathEnabled"><span data-i="subfolder"></span><b id="v-customPathEnabled"></b></label>
+      <label class="row" data-key="renameEnabled"><span data-i="rename"></span><b id="v-renameEnabled"></b></label>
+      <label class="row" data-key="copyMediaFile"><span data-i="copyFile"></span><b id="v-copyMediaFile"></b></label>
+      <label class="row" data-key="interceptImages"><span data-i="intercept"></span><b id="v-interceptImages"></b></label>
+      <div class="slider"><span data-i="toastMs"></span><input id="toastMs" type="range" min="1500" max="10000" step="500"><b id="v-toastMs"></b></div>
+      <div class="slider"><span data-i="holdMs"></span><input id="holdMenuMs" type="range" min="400" max="2000" step="50"><b id="v-holdMenuMs"></b></div>
+      <div class="slider"><span data-i="tabSize"></span><input id="altMenuScale" type="range" min="50" max="140" step="5"><b id="v-altMenuScale"></b></div>
+      <div class="slider"><span data-i="zoomHold"></span><input id="zoomHoldMs" type="range" min="400" max="2000" step="50"><b id="v-zoomHoldMs"></b></div>
+      <div class="hint" data-i="hold2"></div>
+      <div class="pick" id="altHoldMode">
+        <button type="button" data-v="x1">same</button>
+        <button type="button" data-v="x1.5">×1.5</button>
+        <button type="button" data-v="x2">×2</button>
+        <button type="button" data-v="plus1500">+1.5s</button>
+      </div>
+      <div class="pick" id="pierceMode">
+        <button type="button" data-v="auto" data-i="pierceAuto"></button>
+        <button type="button" data-v="off" data-i="pierceOff"></button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-i="secService"></h2>
+    <div class="actions">
+      <button type="button" class="danger wide" id="fixHistory" data-i="repairHist"></button>
+      <button type="button" class="danger wide" id="fixFormat" data-i="repairFmt"></button>
+      <button type="button" class="wide" id="shortcuts" data-i="shortcuts"></button>
+      <button type="button" class="wide" id="restore" data-i="restore"></button>
+      <button type="button" class="violet wide" id="devLogs" data-i="devLogs"></button>
+      <button type="button" class="violet wide" id="importSet" data-i="importSet"></button>
+      <button type="button" class="violet wide" id="exportSet" data-i="exportSet"></button>
+    </div>
+    <div id="status"></div>
+  </section>
+  <input id="importFile" type="file" accept="application/json,.json" hidden>
+  <script src="settings.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

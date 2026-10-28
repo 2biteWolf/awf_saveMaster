@@ -1,2 +1,3 @@
-# awf_saveMaster
-Chrome/Opera gx browser extenshion to master save any media content on web page.
+# AWF_saveMaster
+
+Version 1.4.2. Opera GX and Chrome extension that saves the media under the cursor.

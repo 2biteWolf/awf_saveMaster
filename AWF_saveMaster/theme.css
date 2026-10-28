@@ -1,0 +1,42 @@
+:root {
+  --aw-bg: #0d0b12;
+  --aw-fill: #222034;
+  --aw-panel: #2e2c42;
+  --aw-lime: #99e550;
+  --aw-muted: #6a8a4a;
+  --aw-text: #99e550;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--aw-bg);
+  color: var(--aw-lime);
+  font-family: VT323, Consolas, "Courier New", monospace;
+}
+.aw-box {
+  background: var(--aw-fill);
+  border: 1px solid var(--aw-lime);
+}
+.aw-cell {
+  background: var(--aw-fill);
+  border: 1px solid var(--aw-lime);
+  color: var(--aw-lime);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+}
+.aw-cell:hover, .aw-cell.active { background: var(--aw-panel); }
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+input, select {
+  font-family: inherit;
+  background: var(--aw-panel);
+  color: var(--aw-lime);
+  border: 1px solid var(--aw-lime);
+  outline: none;
+}
