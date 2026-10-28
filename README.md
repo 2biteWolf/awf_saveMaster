@@ -23,12 +23,14 @@ Ten presets, rename patterns, PNG or original format, zoom, and wheel tab switch
 ## Hotkeys
 
 **recommended mouse setup =** mouse4=main button & mouse5=ctrl+w - useful setup for massive saving
+
 *hotkeys can be changed in popup menu*
--ctrl+k = main button [save/press to menu]
--alt+z = pin/unpin tab
--alt+q = open in new tab
--alt+v = copy content
--alt+c = alt save button
+
+- ctrl+k = main button [save/press to menu]
+- alt+z = pin/unpin tab
+- alt+q = open in new tab
+- alt+v = copy content
+- alt+c = alt save button
 
 ## Install
 
