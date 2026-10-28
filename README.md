@@ -1,6 +1,6 @@
 # AWF_saveMaster
-created AWolfF by grok AI
-Version 1.4.2. Opera GX and Chrome extension.
+*created AWolfF by grok AI*
+*Version 1.4.2. Opera GX and Chrome extension.*
 
 **Ultimate tool for explore and save media content in web.**
 ______
@@ -20,6 +20,16 @@ Ten presets, rename patterns, PNG or original format, zoom, and wheel tab switch
 - media viewer with adaptive media scale
 - save image history
 
+## Hotkeys
+
+**recommended mouse setup =** mouse4=main button & mouse5=ctrl+w - useful setup for massive saving
+*hotkeys can be changed in popup menu*
+-ctrl+k = main button [save/press to menu]
+-alt+z = pin/unpin tab
+-alt+q = open in new tab
+-alt+v = copy content
+-alt+c = alt save button
+
 ## Install
 
 - download from [chrome web store](https://chromewebstore.google.com/detail/awfsavemaster/nlnfkeiodggocfnlfceihjmilojliija)
@@ -30,4 +40,3 @@ OR
 - unzip archive in folder
 - open chrome ext: **chrome://extensions/** OR operaGX ext: **opera://extensions**
 - load unpacked - select repo folder
-
