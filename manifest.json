@@ -1,0 +1,79 @@
+{
+  "manifest_version": 3,
+  "name": "AWF_saveMaster",
+  "version": "1.3.9",
+  "description": "Hover-save images, gif and video into a Downloads subfolder. Viewer history, pierce overlays, WASD menu. Opera GX + Chrome.",
+  "author": "AW",
+  "permissions": [
+    "storage",
+    "tabs",
+    "scripting",
+    "downloads",
+    "clipboardWrite",
+    "webNavigation",
+    "activeTab",
+    "offscreen"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "inWork/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*", "file://*/*"],
+      "js": ["main/tabspin.js", "main/tabcycle.js"],
+      "run_at": "document_start",
+      "all_frames": false,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true
+    },
+    {
+      "matches": ["http://*/*", "https://*/*", "file://*/*"],
+      "js": ["settings.js", "main/alt-guard.js"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true
+    },
+    {
+      "matches": ["http://*/*", "https://*/*", "file://*/*"],
+      "js": ["settings.js", "main/redgifs.js", "content.js"],
+      "run_at": "document_idle",
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true
+    }
+  ],
+  "action": {
+    "default_title": "AWF_saveMaster",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "publish/icon48.png",
+      "128": "publish/icon128.png"
+    }
+  },
+  "commands": {
+    "toggle-pin": {
+      "suggested_key": { "default": "Alt+Z" },
+      "description": "Pin / unpin current tab"
+    },
+    "open_media": {
+      "suggested_key": { "default": "Alt+Q" },
+      "description": "Open highlighted media in viewer tab"
+    },
+    "copy_media": {
+      "suggested_key": { "default": "Alt+V" },
+      "description": "Copy highlighted media (file or URL)"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["main/viewer.html", "main/viewer.js", "settings.js", "theme.css"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "icons": {
+    "48": "publish/icon48.png",
+    "128": "publish/icon128.png"
+  }
+}
