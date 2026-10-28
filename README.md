@@ -19,6 +19,7 @@ Ten presets, rename patterns, PNG or original format, zoom, and wheel tab switch
 - setting custom hotkeys
 - media viewer with adaptive media scale
 - save image history
+- scrolling browser tabs with mmb
 
 ## Hotkeys
 
