@@ -12,15 +12,21 @@
     p, li { margin: .4rem 0; }
     a { color: #99e550; }
     hr { border: 0; border-top: 1px solid #3a4a2a; }
-    .top { font-family: Consolas, monospace; font-size: 1rem; margin: 0 0 1.5rem; display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .meta { color: #6a8a4a; font-family: Consolas, monospace; font-size: .9rem; }
+    nav.top { font-family: Consolas, monospace; font-size: 1rem; margin: 0 0 1.75rem; display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; }
+    nav.top a, .legal a { color: #ff8c1a; text-decoration: underline; }
+    nav.top a:hover, .legal a:hover { color: #ffb366; }
+    nav.top .cur { color: #6a8a4a; text-decoration: none; border-bottom: 2px solid #ff8c1a; pointer-events: none; cursor: default; }
   </style>
 </head>
 <body>
 <main>
   <nav class="top">
-    <a href="../">License &amp; privacy policy</a>
-    <a href="https://github.com/2biteWolf/awf_saveMaster/blob/main/LICENSE">LICENSE</a>
-    <a href="https://github.com/2biteWolf/awf_saveMaster">GitHub repo</a>
+    <span class="cur" aria-current="page">&lt; to main page</span>
+    <a href="/awf_saveMaster/">priv eng</a>
+    <a href="/awf_saveMaster/lic/">lic eng</a>
+    <a href="/awf_saveMaster/priv-ru/">priv ru</a>
+    <a href="/awf_saveMaster/lic-ru/">lic ru</a>
   </nav>
   <h1>AWF_saveMaster</h1>
   <div id="readme">
@@ -65,12 +71,12 @@
 </ul>
   </div>
   <hr>
-  <p><a href="../">License &amp; privacy policy</a></p>
+  <p class="legal"><a href="/awf_saveMaster/">Privacy policy</a> · <a href="/awf_saveMaster/lic/">License</a> · <a href="/awf_saveMaster/priv-ru/">Политика (RU)</a> · <a href="/awf_saveMaster/lic-ru/">Лицензия (RU)</a></p>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
 <script>
   // Show the current README.md served by this site; the copy above is the no-JS fallback.
-  fetch('../README.md', { cache: 'no-cache' })
+  fetch('/awf_saveMaster/README.md', { cache: 'no-cache' })
     .then(function (r) { return r.ok ? r.text() : Promise.reject(r.status); })
     .then(function (md) { if (window.marked) document.getElementById('readme').innerHTML = marked.parse(md); })
     .catch(function () {});
