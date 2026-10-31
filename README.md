@@ -4,6 +4,13 @@
 
 **Ultimate tool for explore and save media content in web.**
 ____________________________________________________________
+> [Chrome web store](https://chromewebstore.google.com/detail/awfsavemaster/nlnfkeiodggocfnlfceihjmilojliija)
+
+> [License](https://2bitewolf.github.io/awf_saveMaster/lic-en/)*
+
+> [Privacy policy](https://2bitewolf.github.io/awf_saveMaster/priv-en/)
+
+____________________________________________________________
 **One-click save for images, GIF and video**, plus a built-in interface with layered menus and a full settings panel.**Chrome and Opera GX.**
 
 Point at a picture, GIF or video and press the save key once. The file lands in Downloads, or in a subfolder you set.
