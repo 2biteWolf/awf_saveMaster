@@ -3,56 +3,83 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AWF_saveMaster — Privacy policy</title>
+  <title>AWF_saveMaster</title>
   <style>
     body { margin: 0; background: #0d0b12; color: #d7e8c4; font: 18px/1.45 Georgia, serif; }
-    main { max-width: 42rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+    main { max-width: 46rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
     h1 { font: 400 2rem/1.2 Consolas, monospace; color: #99e550; margin: 0 0 .4rem; }
     h2 { font: 400 1.15rem/1.3 Consolas, monospace; color: #99e550; margin: 2rem 0 .4rem; }
     p, li { margin: .4rem 0; }
     a { color: #99e550; }
+    hr { border: 0; border-top: 1px solid #3a4a2a; }
     .meta { color: #6a8a4a; font-family: Consolas, monospace; font-size: .9rem; }
     nav.top { font-family: Consolas, monospace; font-size: 1rem; margin: 0 0 1.75rem; display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; }
-    nav.top a { color: #ff8c1a; text-decoration: underline; }
-    nav.top a:hover { color: #ffb366; }
+    nav.top a, .legal a { color: #ff8c1a; text-decoration: underline; }
+    nav.top a:hover, .legal a:hover { color: #ffb366; }
     nav.top .cur { color: #6a8a4a; text-decoration: none; border-bottom: 2px solid #ff8c1a; pointer-events: none; cursor: default; }
-    pre.lic { white-space: pre-wrap; font: .95rem/1.5 Consolas, monospace; margin: 1rem 0; }
-
   </style>
 </head>
 <body>
 <main>
   <nav class="top">
-    <a href="/awf_saveMaster/main/">&lt; to main page</a>
-    <span class="cur" aria-current="page">priv eng</span>
-    <a href="/awf_saveMaster/lic/">lic eng</a>
+    <span class="cur" aria-current="page">main page</span>
+    <a href="/awf_saveMaster/priv-en/">priv eng</a>
+    <a href="/awf_saveMaster/lic-en/">lic eng</a>
     <a href="/awf_saveMaster/priv-ru/">priv ru</a>
     <a href="/awf_saveMaster/lic-ru/">lic ru</a>
   </nav>
   <h1>AWF_saveMaster</h1>
-  <p class="meta">Privacy policy · 4 October 2026 · This address does not change.</p>
-  <p>This page describes the browser extension <strong>AWF_saveMaster</strong>, published by Artem Ivanov (AW). It saves an image, GIF or video from the page you are on, and opens it in its own viewer. There is no account.</p>
-  <h2>What stays on your computer</h2>
-  <ul>
-    <li>The file you save, in your Downloads folder or a subfolder you chose.</li>
-    <li>Settings, rename presets, and the viewer history (the media and the address it came from), in the browser’s local storage.</li>
-    <li>An optional local log of saves, written only if you press “copy devLogs”.</li>
-  </ul>
-  <p>None of that is sent to the author, sold, or used for advertising, credit, or anything outside the extension.</p>
-  <h2>What the extension reads</h2>
-  <p>On the site you are visiting it reads the picture, GIF or video under your pointer, and the address of that file, so it can save or open it. It does this only when you use a save, open, copy or zoom action, or when a direct media tab is opened in the viewer. It does not keep a history of every page you visit, and it does not read passwords, messages, or payment data.</p>
-  <h2>Clipboard and downloads</h2>
-  <p>Copy runs only when you ask for it (the copy key or the copy button). Download runs only when you save. The browser writes the file to disk.</p>
-  <h2>One outside request</h2>
-  <p>The settings window may load the typeface VT323 from Google Fonts (fonts.googleapis.com and fonts.gstatic.com). That request is the font file, not your saved media. The extension has no analytics and no other third party.</p>
-  <h2>How long it is kept</h2>
-  <p>Downloads stay until you delete them. Settings and viewer history stay until you clear the extension’s data or remove the extension. Removing the extension does not delete files already saved to disk.</p>
-  <h2>This page</h2>
-  <p>The Chrome Web Store, the repository and the extension all point here. When the text changes, this same address is updated. The date at the top changes with it. You do not get a new link for each version.</p>
-  <h2>Contact</h2>
-  <p><a href="https://github.com/2biteWolf/awf_saveMaster">github.com/2biteWolf/awf_saveMaster</a></p>
-  <h2>По-русски</h2>
-  <p>Расширение сохраняет картинку, GIF или видео с открытой страницы и показывает его в своём окне. Аккаунта нет. Файл, настройки, пресеты и история просмотра остаются на компьютере и автору не отправляются. Читается только медиа под курсором и его адрес, и только когда вы сохраняете, открываете, копируете или смотрите его. Пароли, переписка и платежи не читаются. Копирование и скачивание только по вашему действию. Окно настроек может запросить шрифт VT323 у Google Fonts. Других сторонних сервисов нет.</p>
+  <div id="readme">
+<p><em>created AWolfF by grok AI</em></p>
+<p><em>Version 1.4.2. Opera GX and Chrome extension.</em></p>
+<p><strong>Ultimate tool for explore and save media content in web.</strong></p>
+<hr>
+<p><strong>One-click save for images, GIF and video</strong>, plus a built-in interface with layered menus and a full settings panel.<strong>Chrome and Opera GX.</strong></p>
+<p>Point at a picture, GIF or video and press the save key once. The file lands in Downloads, or in a subfolder you set.</p>
+<p>The extension brings its own interface, not a single button. Hold the save key and the first menu opens under the cursor: presets, open, copy, save, hotkeys. Hold longer and a second menu takes over for tabs. The viewer is a third layer: history, fit, and save-as for that file. Settings sit behind all of this, so the click stays simple and the rest is adjustable.</p>
+<p>Ten presets, rename patterns, PNG or original format, zoom, and wheel tab switching. Image and Video open in the viewer. Right-click stays the normal browser menu. No account. Files and settings stay on your computer.</p>
+<h2>Features</h2>
+<ul>
+<li>save/copy/open media frow sites with 1 click in custom folder path</li>
+<li>10 setting presets fast to switch</li>
+<li>setting custom hotkeys</li>
+<li>media viewer with adaptive media scale</li>
+<li>save image history</li>
+<li>scrolling browser tabs with mmb</li>
+<li>zoom media with press mmb</li>
+</ul>
+<h2>Hotkeys</h2>
+<p><strong>recommended mouse setup =</strong> mouse4=main button &amp; mouse5=ctrl+w - useful setup for massive saving</p>
+<p><em>hotkeys can be changed in popup menu</em></p>
+<ul>
+<li>ctrl+k = main button [save/press to menu]</li>
+<li>alt+z = pin/unpin tab</li>
+<li>alt+q = open in new tab</li>
+<li>alt+v = copy content</li>
+<li>alt+c = alt save button</li>
+</ul>
+<h2>Install</h2>
+<ul>
+<li>download from <a href="https://chromewebstore.google.com/detail/awfsavemaster/nlnfkeiodggocfnlfceihjmilojliija">chrome web store</a></li>
+</ul>
+<p>OR</p>
+<ul>
+<li>download repository</li>
+<li>unzip archive in folder</li>
+<li>open chrome ext: <strong>chrome://extensions/</strong> OR operaGX ext: <strong>opera://extensions</strong></li>
+<li>load unpacked - select repo folder</li>
+</ul>
+  </div>
+  <hr>
+  <p class="legal"><a href="/awf_saveMaster/priv-en/">Privacy policy</a> · <a href="/awf_saveMaster/lic-en/">License</a> · <a href="/awf_saveMaster/priv-ru/">Политика (RU)</a> · <a href="/awf_saveMaster/lic-ru/">Лицензия (RU)</a></p>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script>
+  // Show the current README.md served by this site; the copy above is the no-JS fallback.
+  fetch('/awf_saveMaster/README.md', { cache: 'no-cache' })
+    .then(function (r) { return r.ok ? r.text() : Promise.reject(r.status); })
+    .then(function (md) { if (window.marked) document.getElementById('readme').innerHTML = marked.parse(md); })
+    .catch(function () {});
+</script>
 </body>
 </html>
