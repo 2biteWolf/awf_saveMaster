@@ -1,0 +1,39 @@
+---
+permalink: /main/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AWF_saveMaster</title>
+  <style>
+    body { margin: 0; background: #0d0b12; color: #d7e8c4; font: 18px/1.45 Georgia, serif; }
+    main { max-width: 46rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+    h1 { font: 400 2rem/1.2 Consolas, monospace; color: #99e550; margin: 0 0 .4rem; }
+    h2 { font: 400 1.15rem/1.3 Consolas, monospace; color: #99e550; margin: 2rem 0 .4rem; }
+    p, li { margin: .4rem 0; }
+    a { color: #99e550; }
+    hr { border: 0; border-top: 1px solid #3a4a2a; }
+    .top { font-family: Consolas, monospace; font-size: 1rem; margin: 0 0 1.5rem; display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+<main>
+  <nav class="top">
+    <a href="../">License &amp; privacy policy</a>
+    <a href="https://github.com/2biteWolf/awf_saveMaster/blob/main/LICENSE">LICENSE</a>
+    <a href="https://github.com/2biteWolf/awf_saveMaster">GitHub repo</a>
+  </nav>
+  <h1>AWF_saveMaster</h1>
+{% assign readme = site.pages | where: "path", "README.md" | first %}
+{% if readme %}
+{{ readme.content | markdownify }}
+{% else %}
+  <p><a href="https://github.com/2biteWolf/awf_saveMaster#readme">README on GitHub</a></p>
+{% endif %}
+  <hr>
+  <p><a href="../">License &amp; privacy policy</a></p>
+</main>
+</body>
+</html>
