@@ -1,0 +1,112 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AWF_saveMaster — how to use</title><style>
+@page{size:A4;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;background:#0d0e14;color:#e8ecef;font:13.5px/1.5 "Segoe UI",Arial,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{padding:14mm 15mm 12mm;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.cover{height:297mm;display:flex;flex-direction:column;justify-content:center;padding:0 22mm;page-break-after:always;background:radial-gradient(circle at 80% 20%,#2a1446 0,#0d0e14 55%)}
+.cover h1{font:700 46px/1.1 Consolas,monospace;color:#9be050;margin:0 0 10px}
+.cover .sub{font-size:20px;color:#c9b6ff}
+.cover .ver{margin-top:26px;color:#9aa3ad;font-size:14px}
+.toc{margin-top:34px;border-left:3px solid #9be050;padding-left:14px}
+.toc div{font-size:15px;margin:3px 0} .toc b{color:#9be050;font-family:Consolas,monospace;margin-right:8px}
+h2{font:700 24px/1.2 Consolas,monospace;color:#9be050;border-bottom:2px solid #9be050;padding-bottom:6px;margin:0 0 10px}
+h2.sc{color:#b780ff;border-color:#a050ff}
+section{page-break-before:always} section.flow{page-break-before:auto} section.flow .page{padding-top:4mm} h2{break-after:avoid}
+section.first{page-break-before:auto}
+.intro{color:#c8cfd6;margin:0 0 12px}
+.step{display:flex;gap:12px;background:#151722;border:1px solid #2b2f3d;border-left:4px solid #9be050;border-radius:6px;padding:10px 12px;margin:0 0 10px;break-inside:avoid}
+.sc .step{border-left-color:#a050ff}
+.num{flex:0 0 30px;height:30px;border-radius:50%;background:#9be050;color:#0d0e14;font:700 15px/30px Consolas,monospace;text-align:center}
+.sc .num{background:#a050ff;color:#fff}
+.body{flex:1;min-width:0}
+.body p{margin:0 0 6px}
+.imgs{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;margin-top:4px}
+.imgs img{max-height:300px;width:auto;height:auto;border:1px solid #3a3f50;border-radius:4px;background:#000}
+.imgs img.w{width:100%}
+kbd{display:inline-block;font:700 12px/1 Consolas,monospace;color:#0d0e14;background:#9be050;border-radius:3px;padding:3px 6px;margin:0 1px}
+.sc kbd{background:#c9a6ff}
+.ui{color:#9be050;font-weight:600} .sc .ui{color:#c9a6ff}
+.note{background:#1d1530;border:1px solid #a050ff;border-radius:6px;padding:8px 12px;margin:6px 0 10px;color:#e4d8ff;break-inside:avoid}
+.tip{background:#16210f;border:1px solid #9be050;border-radius:6px;padding:8px 12px;margin:6px 0 10px;break-inside:avoid}
+table{break-inside:avoid;border-collapse:collapse;width:100%;margin:4px 0 8px} td{border:1px solid #2b2f3d;padding:4px 8px;vertical-align:top} td:first-child{white-space:nowrap;width:1%}
+.cap{color:#9aa3ad;font-size:12.5px;margin:0 0 4px}
+.bg{position:fixed;left:0;top:0;width:100%;height:100%;background:#0d0e14;z-index:-1}
+
+@media screen{
+html,body{font-size:16px}
+body{background:#0d0e14}
+.bg{display:none}
+.wrap{max-width:900px;margin:0 auto;padding:2rem 1.25rem 4rem}
+.page{padding:0}
+section{margin:0 0 2.5rem}
+section.flow .page{padding-top:0}
+.cover{height:auto;display:block;padding:1.5rem 1.5rem 1.75rem;margin:0 0 2.5rem;border-radius:8px;border:1px solid #2b2f3d}
+.cover h1{font-size:40px}
+.toc a{color:inherit;text-decoration:none} .toc a:hover{color:#9be050}
+.imgs img{max-width:100%;max-height:none}
+nav.top{font-family:Consolas,monospace;font-size:1rem;margin:0 0 1.75rem;display:flex;flex-wrap:wrap;gap:.4rem 1.25rem}
+nav.top a{color:#ff8c1a;text-decoration:underline} nav.top a:hover{color:#ffb366}
+nav.top .cur{color:#6a8a4a;text-decoration:none;border-bottom:2px solid #ff8c1a;pointer-events:none;cursor:default}
+}
+@media (max-width:600px){.step{flex-direction:column;gap:6px}.cover h1{font-size:30px}}
+</style></head><body><div class=bg></div><div class="wrap">
+  <nav class="top">
+    <a href="/awf_saveMaster/">main page</a>
+    <span class="cur" aria-current="page">howto eng</span>
+    <a href="/awf_saveMaster/howto-ru/">howto ru</a>
+    <a href="/awf_saveMaster/priv-en/">priv eng</a>
+    <a href="/awf_saveMaster/lic-en/">lic eng</a>
+    <a href="/awf_saveMaster/priv-ru/">priv ru</a>
+    <a href="/awf_saveMaster/lic-ru/">lic ru</a>
+  </nav>
+
+<div class="cover"><h1>AWF_saveMaster</h1><div class="sub">How-to guide: every button and key, step by step</div><div class="ver">Version 1.4.5 · 31 Oct 2026</div><div class="toc"><div><a href="#s01"><b>01</b>Open the extension and pick a language</a></div><div><a href="#s02"><b>02</b>Save a picture with one key</a></div><div><a href="#s03"><b>03</b>Hold menu: Q W A S D</a></div><div><a href="#s04"><b>04</b>Tab menu</a></div><div><a href="#s05"><b>05</b>Layer Scalpel</a></div><div><a href="#s06"><b>06</b>Look under overlays (automatic)</a></div><div><a href="#s07"><b>07</b>Zoom</a></div><div><a href="#s08"><b>08</b>Switching tabs</a></div><div><a href="#s09"><b>09</b>Viewer</a></div><div><a href="#s10"><b>10</b>Popup: Keys</a></div><div><a href="#s11"><b>11</b>Popup: Saving</a></div><div><a href="#s12"><b>12</b>Popup: Behavior</a></div><div><a href="#s13"><b>13</b>Popup: Timings</a></div><div><a href="#s14"><b>14</b>Popup: Dev</a></div></div></div>
+<section id="s01" class=" first"><div class="page"><h2 class="">01. Open the extension and pick a language</h2>
+<p class="intro">Saves pictures and videos from any page with one key. Settings are in the popup.</p>
+<div class="step"><div class="num">1</div><div class="body"><p>Click the extension icon.</p><div class=imgs><img src="img/01_popup_full.png" style="max-width:min(340px,100%)"></div></div></div>
+<div class="step"><div class="num">2</div><div class="body"><p>Language of the popup and on-page menus. Green = active.</p><div class=imgs><img src="img/02_popup_language.png" style="max-width:min(324px,100%)"></div></div></div>
+<div class="step"><div class="num">3</div><div class="body"><p>Click a title to open it; only one block stays open. Click again to close. The last open block is remembered.</p><div class=imgs><img src="img/03_popup_open_keys.png" style="max-width:min(340px,100%)"><img src="img/42_popup_all_closed.png" style="max-width:min(340px,100%)"></div></div></div>
+</div></section>
+<section id="s02" class=""><div class="page"><h2 class="">02. Save a picture with one key</h2>
+
+<div class="step"><div class="num">1</div><div class="body"><p>Point at a picture. The green frame shows what will be saved.</p><div class=imgs><img src="img/44_page_hover_highlight.png" style="max-width:min(360px,100%)"></div></div></div>
+<div class="step"><div class="num">2</div><div class="body"><p>Tap <kbd>Ctrl</kbd>+<kbd>K</kbd>.</p><div class=imgs><img src="img/45_toast_saved.png" style="max-width:min(184px,100%)"></div></div></div>
+<div class="step"><div class="num">3</div><div class="body"><p>Nothing under the cursor:</p><div class=imgs><img src="img/58_toast_miss_1.png" style="max-width:min(246px,100%)"></div></div></div>
+</div></section>
+<section id="s03" class=""><div class="page"><h2 class="">03. Hold menu: Q W A S D</h2>
+
+<div class="step"><div class="num">1</div><div class="body"><p>Hold <kbd>Ctrl</kbd>+<kbd>K</kbd> ~1 s. The menu opens centered on the cursor.</p><div class=imgs><img src="img/46_menu_hold.png" style="max-width:min(218px,100%)"></div></div></div>
+<table><tr><td><kbd>Q</kbd> <span class="ui">presets</span></td><td>Slots for saving settings.</td></tr><tr><td><kbd>W</kbd> <span class="ui">open</span></td><td>In the viewer.</td></tr><tr><td><kbd>A</kbd> <span class="ui">copy</span></td><td>File or link.</td></tr><tr><td><kbd>S</kbd> <span class="ui">save</span></td><td>Quick switches.</td></tr><tr><td><kbd>D</kbd> <span class="ui">scalpel</span></td><td>Section 05.</td></tr><tr><td><kbd>Esc</kbd></td><td>Close.</td></tr></table>
+<div class="step"><div class="num">2</div><div class="body"><p><kbd>S</kbd>: five switches. Digit <kbd>1</kbd>…<kbd>5</kbd> or click a row.</p><div class=imgs><img src="img/48_menu_S_list.png" style="max-width:min(328px,100%)"></div></div></div>
+<div class="step"><div class="num">3</div><div class="body"><p><kbd>Q</kbd>: ten preset slots. Digit or click = load. <kbd>~</kbd> first = write mode: the next digit stores the current saving settings.</p><div class=imgs><img src="img/49_menu_Q_list.png" style="max-width:min(328px,100%)"></div></div></div>
+</div></section>
+<section id="s04" class=" flow"><div class="page"><h2 class="">04. Tab menu</h2>
+
+<div class="step"><div class="num">1</div><div class="body"><p>Keep holding <kbd>Ctrl</kbd>+<kbd>K</kbd> (second hold, default ×2).</p><div class=imgs><img src="img/47_menu_tab.png" style="max-width:min(256px,100%)"></div></div></div>
+<table><tr><td colspan="2"><kbd>←</kbd> <span class="ui">back</span></td></tr><tr><td colspan="2"><kbd>→</kbd> <span class="ui">fwd</span></td></tr><tr><td><kbd>S</kbd> <span class="ui">save file</span></td><td>this tab's file</td></tr><tr><td colspan="2"><kbd>W</kbd>/<kbd>O</kbd> <span class="ui">open viewer</span></td></tr><tr><td colspan="2"><kbd>R</kbd> <span class="ui">reload</span></td></tr><tr><td colspan="2"><kbd>X</kbd> <span class="ui">close tab</span></td></tr><tr><td><kbd>P</kbd> <span class="ui">pin</span></td><td>pin / unpin</td></tr><tr><td colspan="2"><kbd>D</kbd> <span class="ui">duplicate</span></td></tr></table>
+</div></section>
+<section id="s05" class="sc"><div class="page"><h2 class="sc">05. Layer Scalpel</h2>
+<p class="intro">Steps through the page layer by layer at one point and saves the layer you pick. The page is not changed.</p>
+<div class="step"><div class="num">1</div><div class="body"><p>Hold <kbd>Ctrl</kbd>+<kbd>K</kbd>, press <kbd>D</kbd>.</p><div class=imgs><img src="img/50_menu_tile_D_scalpel.png" style="max-width:min(66px,100%)"></div></div></div>
+<div class="step"><div class="num">2</div><div class="body"><p>A purple crosshair appears in the middle and follows the mouse; the panel is at the bottom.</p><div class=imgs><img src="img/51_scalpel_opened_center.png" style="max-width:min(590px,100%)"></div></div></div>
+<div class="step"><div class="num">3</div><div class="body"><p>Point at the picture. The purple frame = current layer (here: a transparent overlay).</p><div class=imgs><img src="img/52_scalpel_top_layer_overlay.png" style="max-width:min(590px,100%)"></div></div></div>
+<div class="step"><div class="num">4</div><div class="body"><p>Deeper: wheel, <kbd>→</kbd>/<kbd>↓</kbd>, <kbd>]</kbd>. Back: <kbd>←</kbd>/<kbd>↑</kbd>, <kbd>[</kbd>. Or click a segment. Picture or video → green <span class="ui">✓</span>.</p><div class=imgs><img src="img/53_scalpel_image_found.png" style="max-width:min(590px,100%)"><img src="img/55_scalpel_crosshair_on_image.png" style="max-width:min(364px,100%)"></div></div></div>
+<div class="step"><div class="num">5</div><div class="body"><p>Segments: purple = current, grey = passed, green line = picture. Then layer number, element name and size.</p><div class=imgs><img src="img/54_scalpel_panel.png" style="max-width:min(312px,100%)"></div></div></div>
+<div class="step"><div class="num">6</div><div class="body"><p>Click the page or <kbd>Space</kbd> to lock the aim; the mouse can now go to the panel. Click again to unlock.</p><div class=imgs><img src="img/56_scalpel_panel_locked.png" style="max-width:min(312px,100%)"></div></div></div>
+<div class="step"><div class="num">7</div><div class="body"><p>Save: <kbd>S</kbd>, <kbd>Enter</kbd>, <span class="ui">save</span> or a tap of <kbd>Ctrl</kbd>+<kbd>K</kbd>. The scalpel closes, then saves. No picture on the layer → note only.</p><div class=imgs><img src="img/57_toast_scalpel_saved.png" style="max-width:min(184px,100%)"></div></div></div>
+<div class="note"><kbd>Esc</kbd> or <span class="ui">close</span> close it and remove everything it drew. While open, page clicks and keys are blocked.</div>
+</div></section>
+<section id="s06" class=" flow"><div class="page"><h2 class="">06. Look under overlays (automatic)</h2>
+<p class="intro">For sites that put an invisible button or frame over the picture.</p>
+<div class="step"><div class="num">1</div><div class="body"><p>In <span class="ui">Behavior</span>. Default: left button.</p><div class=imgs><img src="img/26_field_how_pierceMode.png" style="max-width:min(306px,100%)"></div></div></div>
+<div class="step"><div class="num">2</div><div class="body"><p>Each empty save counts as a miss for that spot.</p><div class=imgs><img src="img/58_toast_miss_1.png" style="max-width:min(246px,100%)"><img src="img/59_toast_miss_2.png" style="max-width:min(246px,100%)"></div></div></div>
+<div class="step"><div class="num">3</div><div class="body"><p>3rd miss in the same spot → it looks under the overlays, saves the picture and remembers the site.</p><div class=imgs><img src="img/60_toast_pierce.png" style="max-width:min(338px,100%)"><img src="img/61_toast_after_pierce_save.png" style="max-width:min(184px,100%)"></div></div></div>
+<div class="step"><div class="num">4</div><div class="body"><p>From then on: look-under always on for this site (hover frame too), saved on the first tap.</p><div class=imgs><img src="img/62_page_pierce_target.png" style="max-width:min(360px,100%)"></div></div></div>
+<div class="tip"><span class="ui">Do not look under overlays</span> turns this off. Remembered sites travel with <span class="ui">Download a settings file</span> / <span class="ui">Load a settings file</span>. One-off cases: Layer Scalpel.</div>
+</div></section>
+<section id="s07" class=""><div class="page"><h2 class="">07. Zoom</h2><div class="step"><div class="num">1</div><div class="body"><p>Point at a picture and hold the mouse wheel (middle button) for <span class="ui">Hold the wheel to zoom</span> (Timings).</p><div class=imgs><img src="img/63_zoom_full.png" style="max-width:min(590px,100%)"></div></div></div><div class="step"><div class="num">2</div><div class="body"><p>Slider on the right: max … 0. Bottom (0) closes zoom.</p><div class=imgs><img src="img/64_zoom_slider.png" style="max-width:min(118px,100%)"></div></div></div><div class="step"><div class="num">3</div><div class="body"><p>Wheel: closer / farther (100–300%). Drag to move.</p><div class=imgs><img src="img/65_zoom_wheel_closer.png" style="max-width:min(590px,100%)"></div></div></div><div class="step"><div class="num">4</div><div class="body"><p>Close: <kbd>Esc</kbd> or slider to 0.</p></div></div></div></section><section id="s08" class=" flow"><div class="page"><h2 class="">08. Switching tabs</h2><div class="step"><div class="num">1</div><div class="body"><p>Quick menu open (<kbd>Ctrl</kbd>+<kbd>K</kbd> held) + wheel: one tab left/right.</p><div class=imgs><img src="img/46_menu_hold.png" style="max-width:min(218px,100%)"></div></div></div><div class="step"><div class="num">2</div><div class="body"><p>Tab menu open (second hold) + wheel: <span class="ui">TAB SPIN</span> mode — the wheel keeps switching tabs, badge SPIN. Exit: click or the save key.</p><div class=imgs><img src="img/47_menu_tab.png" style="max-width:min(256px,100%)"></div></div></div><div class="step"><div class="num">3</div><div class="body"><p>On picture-only tabs (viewer, image files) the wheel switches tabs. On/off: <span class="ui">Wheel switches tabs in viewer</span> (Behavior).</p></div></div></div></section><section id="s09" class=""><div class="page"><h2 class="">09. Viewer</h2><p class="intro">Opens with W / Open on a picture. Saved pictures are listed in its history.</p><div class="step"><div class="num">1</div><div class="body"><p>Viewer tab.</p><div class=imgs><img src="img/66_viewer_full.png" style="max-width:min(590px,100%)"></div></div></div><div class="step"><div class="num">2</div><div class="body"><p>Keys: <kbd>←</kbd> or <kbd>Backspace</kbd>, <kbd>→</kbd>.</p><div class=imgs><img src="img/67_viewer_nav.png" style="max-width:min(292px,100%)"><img src="img/68_viewer_prev.png" style="max-width:min(93px,100%)"><img src="img/69_viewer_next.png" style="max-width:min(101px,100%)"></div></div></div><div class="step"><div class="num">3</div><div class="body"><p>Also <kbd>Ctrl</kbd>+<kbd>S</kbd> or the save key.</p><div class=imgs><img src="img/70_viewer_save.png" style="max-width:min(110px,100%)"></div></div></div><div class="step"><div class="num">4</div><div class="body"><p>Pick a file format.</p><div class=imgs><img src="img/71_viewer_saveas.png" style="max-width:min(201px,100%)"></div></div></div><div class="step"><div class="num">5</div><div class="body"><p>History panel; click an entry to open it.</p><div class=imgs><img src="img/73_viewer_history_btn.png" style="max-width:min(40px,100%)"><img src="img/74_viewer_history_open.png" style="max-width:min(140px,100%)"></div></div></div><div class="step"><div class="num">6</div><div class="body"><p><kbd>Esc</kbd> — close.</p></div></div></div></section><section id="s10" class=""><div class="page"><h2 class="">10. Popup: Keys</h2><div class="step"><div class="num">1</div><div class="body"><p>Open <span class="ui">Keys</span>.</p><div class=imgs><img src="img/03_popup_open_keys.png" style="max-width:min(340px,100%)"><img src="img/04_section_keys.png" style="max-width:min(324px,100%)"></div></div></div><div class="step"><div class="num">2</div><div class="body"><p class="cap">tap = save, hold = menus</p><div class=imgs><img src="img/05_field_keys_keySave.png" style="max-width:min(306px,100%)"></div></div></div></div></section>
+<section id="s11" class=""><div class="page"><h2 class="">11. Popup: Saving</h2><div class="step"><div class="num">1</div><div class="body"><p>Open <span class="ui">Saving</span>.</p><div class=imgs><img src="img/10_popup_open_save.png" style="max-width:min(340px,100%)"><img src="img/11_section_save.png" style="max-width:min(324px,100%)"></div></div></div><div class="step"><div class="num">2</div><div class="body"><p class="cap">inside Downloads</p><div class=imgs><img src="img/13_field_save_customPath.png" style="max-width:min(306px,100%)"></div></div></div><div class="step"><div class="num">3</div><div class="body"><p class="cap">click a tag to insert it</p><div class=imgs><img src="img/20_field_save_nameTags_open.png" style="max-width:min(306px,100%)"></div></div></div><div class="step"><div class="num">4</div><div class="body"><p class="cap">not only the link</p><div class=imgs><img src="img/18_field_save_copyMediaFile.png" style="max-width:min(306px,100%)"></div></div></div><div class="step"><div class="num">5</div><div class="body"><p class="cap">opens it in the extension viewer</p><div class=imgs><img src="img/19_field_save_interceptImages.png" style="max-width:min(306px,100%)"></div></div></div></div></section>
+<section id="s12" class=" flow"><div class="page"><h2 class="">12. Popup: Behavior</h2><div class="step"><div class="num">1</div><div class="body"><p>Open <span class="ui">Behavior</span>.</p><div class=imgs><img src="img/21_popup_open_how.png" style="max-width:min(340px,100%)"><img src="img/22_section_how.png" style="max-width:min(324px,100%)"></div></div></div><div class="step"><div class="num">2</div><div class="body"><p class="cap">picture-only tabs: viewer, image files → 08</p><div class=imgs><img src="img/76_field_how_viewerWheelTabs.png" style="max-width:min(330px,100%)"></div></div></div><div class="step"><div class="num">3</div><div class="body"><p class="cap">auto mode → 06</p><div class=imgs><img src="img/26_field_how_pierceMode.png" style="max-width:min(306px,100%)"></div></div></div></div></section>
+<section id="s13" class=" flow"><div class="page"><h2 class="">13. Popup: Timings</h2><div class="step"><div class="num">1</div><div class="body"><p>Open <span class="ui">Timings</span>.</p><div class=imgs><img src="img/27_popup_open_time.png" style="max-width:min(340px,100%)"><img src="img/28_section_time.png" style="max-width:min(324px,100%)"></div></div></div><div class="step"><div class="num">2</div><div class="body"><p class="cap">ms</p><div class=imgs><img src="img/29_field_time_toastMs.png" style="max-width:min(306px,100%)"></div></div></div><div class="step"><div class="num">3</div><div class="body"><p class="cap">relative to the first hold</p><div class=imgs><img src="img/32_field_time_altHoldMode.png" style="max-width:min(306px,100%)"></div></div></div></div></section>
+<section id="s14" class=" flow"><div class="page"><h2 class="">14. Popup: Dev</h2><div class="step"><div class="num">1</div><div class="body"><p>Open <span class="ui">Dev</span>.</p><div class=imgs><img src="img/33_popup_open_dev.png" style="max-width:min(340px,100%)"><img src="img/34_section_dev.png" style="max-width:min(324px,100%)"></div></div></div><div class="step"><div class="num">2</div><div class="body"><p class="cap">files from the download history</p><div class=imgs><img src="img/35_field_dev_fixHistory.png" style="max-width:min(306px,100%)"><img src="img/36_field_dev_fixFormat.png" style="max-width:min(306px,100%)"></div></div></div><div class="step"><div class="num">3</div><div class="body"><p class="cap">viewer tabs from last time</p><div class=imgs><img src="img/38_field_dev_restore.png" style="max-width:min(306px,100%)"></div></div></div><div class="step"><div class="num">4</div><div class="body"><p class="cap">for bug reports</p><div class=imgs><img src="img/39_field_dev_devLogs.png" style="max-width:min(306px,100%)"></div></div></div></div></section>
+</div></body></html>
