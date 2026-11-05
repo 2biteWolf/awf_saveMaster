@@ -8,6 +8,35 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 
 **[1.2.8]** is the frozen baseline (2026-09-17). Later versions add features on top of that snapshot.
 
+## [1.4.6] — 2026-10-31
+### Fixed
+- Viewer: `save as` format menu restored (`buildFmtMenu` was called but no longer defined, so viewer init stopped there: the format menu was empty and the save key message to the viewer was not registered).
+
+## [1.4.5] — 2026-10-31
+
+### Added
+- Popup Behavior: `Wheel switches tabs in viewer` toggle (`viewerWheelTabs`, default on). When off, the wheel on picture-only tabs (viewer, image files) no longer switches tabs; TAB SPIN from the tab menu is unchanged.
+
+## [1.4.4] — 2026-10-31
+
+### Added
+
+- Layer Scalpel. D in the hold menu opens it. A thin purple crosshair follows the mouse; a small panel lists every layer under it. Step deeper with the wheel, the arrows or by clicking a segment; the counter shows "layer N / M" and the chosen layer gets a purple frame. A green check means the layer is a picture or video. "save" (or S / Enter) saves exactly that layer through the normal save. A click on the page locks the aim; Esc closes and leaves the page as it was.
+- Log lines for the overlay look-under: when it runs on a save press, what it found, and when a site is remembered. Layer Scalpel writes a line when it opens and when it saves.
+
+### Changed
+
+- D in the hold menu is now Layer Scalpel. The browser key list stays in the popup under Dev ("Open the browser key list").
+- Popup: every block folds open and shut, only one is open at a time, and the last open block is remembered. Saving and Timings are separate blocks. Tools is now Dev. The overlay switch has a short note on what "auto" does.
+
+## [1.4.3] — 2026-10-31
+
+### Fixed
+
+- The hold menu and the tab menu open with their center on the mouse pointer. The real menu size is measured, and the menu is kept inside the window. If the page has not seen the mouse yet, the menu opens in the middle of the window.
+- An open list (S, Q) that makes the menu taller no longer runs off the screen.
+- D (keys) opens the key page of the browser it runs in. Before, it always tried `opera://` first; in Chrome that address went to Windows and started Opera. Now Opera gets `opera://`, Edge gets `edge://`, Chrome and other browsers get `chrome://extensions/shortcuts`.
+
 ## [1.4.2] — 2026-10-28
 
 ### Fixed

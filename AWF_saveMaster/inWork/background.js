@@ -1336,11 +1336,45 @@ function togglePin() {
   });
 }
 
-function openShortcuts() {
-  chrome.tabs.create({ url: "opera://extensions/shortcuts" }, function () {
-    if (chrome.runtime.lastError) {
-      chrome.tabs.create({ url: "chrome://extensions/shortcuts" }, function () {});
+/* Which Chromium browser runs us. Opera's own scheme must never be opened
+   blindly: in Chrome an unknown "opera://" URL is handed to Windows, which
+   launches Opera through its registered protocol, and no lastError is set. */
+function browserFlavor() {
+  var nav = typeof navigator !== "undefined" ? navigator : null;
+  var text = (nav && nav.userAgent) || "";
+  try {
+    var data = nav && nav.userAgentData;
+    if (data && Array.isArray(data.brands)) {
+      text += "|" + data.brands.map(function (b) { return String((b && b.brand) || ""); }).join("|");
     }
+  } catch (e) {}
+  if (/\bOPR\/|\bOpera\b/i.test(text)) return "opera";
+  if (/\bEdg\/|Microsoft Edge/i.test(text)) return "edge";
+  return "chrome";
+}
+
+var SHORTCUT_PAGES = {
+  opera: "opera://extensions/shortcuts",
+  edge: "edge://extensions/shortcuts",
+  chrome: "chrome://extensions/shortcuts" /* Chrome, Brave, Vivaldi and other forks accept chrome:// */
+};
+
+function openShortcuts() {
+  var flavor = browserFlavor();
+  var url = SHORTCUT_PAGES[flavor] || SHORTCUT_PAGES.chrome;
+  chrome.tabs.create({ url: url }, function () {
+    var err = chrome.runtime.lastError;
+    if (!err || url === SHORTCUT_PAGES.chrome) {
+      awLog("shortcuts", err ? err.message : "opened " + url, { key: "browser=" + flavor });
+      return;
+    }
+    chrome.tabs.create({ url: SHORTCUT_PAGES.chrome }, function () {
+      var err2 = chrome.runtime.lastError;
+      awLog("shortcuts", err2 ? err2.message : "fallback opened " + SHORTCUT_PAGES.chrome, {
+        key: "browser=" + flavor,
+        steps: ["first try " + url + " failed: " + err.message]
+      });
+    });
   });
 }
 
@@ -1589,7 +1623,7 @@ function injectAliveTabs() {
       try {
         chrome.scripting.executeScript({
           target: { tabId: tab.id, allFrames: true },
-          files: ["main/tabspin.js", "main/tabcycle.js", "settings.js", "main/poster.js", "main/alt-guard.js", "content.js"]
+          files: ["main/tabspin.js", "main/tabcycle.js", "settings.js", "main/poster.js", "main/alt-guard.js", "main/scalpel.js", "content.js"]
         }, function () {
           try { void chrome.runtime.lastError; } catch (e) {}
         });

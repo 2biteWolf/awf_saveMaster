@@ -3,6 +3,7 @@
   var BOOLS = [
     "blockAlt",
     "highlightEnabled",
+    "viewerWheelTabs",
     "saveAsPng",
     "customPathEnabled",
     "renameEnabled",
@@ -324,5 +325,32 @@
     tagBtn.addEventListener("click", function () { legend.classList.toggle("open"); });
   }
 
+  /* Accordion: one section open at a time; the last open one is remembered in this popup's localStorage. */
+  var ACC_KEY = "aw-sm-popup-open";
+
+  function openSection(name) {
+    document.querySelectorAll(".acc").forEach(function (sec) {
+      var on = sec.getAttribute("data-sec") === name;
+      sec.classList.toggle("open", on);
+      sec.querySelector(".acc-head").setAttribute("aria-expanded", on ? "true" : "false");
+    });
+    try { localStorage.setItem(ACC_KEY, name || ""); } catch (e) {}
+  }
+
+  function initAccordion() {
+    document.querySelectorAll(".acc").forEach(function (sec) {
+      sec.querySelector(".acc-head").addEventListener("click", function () {
+        openSection(sec.classList.contains("open") ? "" : sec.getAttribute("data-sec"));
+      });
+    });
+    var last = "keys";
+    try {
+      var saved = localStorage.getItem(ACC_KEY);
+      if (saved !== null) last = saved;
+    } catch (e) {}
+    openSection(last);
+  }
+
+  initAccordion();
   load();
 })();

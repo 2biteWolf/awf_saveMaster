@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "AWF_saveMaster",
-  "version": "1.4.2",
+  "version": "1.4.6",
   "description": "Hover-save images, gif and video into a Downloads subfolder. Viewer history, pierce overlays, WASD menu. Opera GX + Chrome.",
   "author": "AW",
   "permissions": [
@@ -37,7 +37,7 @@
     },
     {
       "matches": ["http://*/*", "https://*/*", "file://*/*"],
-      "js": ["settings.js", "main/poster.js", "content.js"],
+      "js": ["settings.js", "main/poster.js", "main/scalpel.js", "content.js"],
       "run_at": "document_idle",
       "all_frames": true,
       "match_about_blank": true,

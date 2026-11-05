@@ -433,6 +433,24 @@
     }
   }
 
+  function buildFmtMenu() {
+    var menu = document.getElementById("fmtMenu");
+    if (!menu || menu.childNodes.length) return;
+    AW.FORMATS.forEach(function (f) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("data-fmt", f.id);
+      b.textContent = f.label;
+      b.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        menu.classList.remove("open");
+        saveAsFormat(f.id);
+      });
+      menu.appendChild(b);
+    });
+  }
+
   function encodeStill(blob, mime) {
     return new Promise(function (resolve, reject) {
       var u = URL.createObjectURL(blob);

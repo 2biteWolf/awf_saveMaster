@@ -51,6 +51,7 @@
   var imgEl = null;
   var currentMode = "none";
   var lastMouse = { x: innerWidth / 2, y: innerHeight / 2 };
+  var mouseKnown = false;
   var presetSlots = [];
   (function () {
     var n = AW.PRESET_COUNT || 10;
@@ -397,10 +398,12 @@
     return "";
   }
 
-  function bgUrl(el) {
+  /* maxHop: how many nodes to check, the element first, then its parents (default 3). */
+  function bgUrl(el, maxHop) {
     var node = el;
     var hop = 0;
-    while (node && hop < 3) {
+    var limit = maxHop || 3;
+    while (node && hop < limit) {
       var bg = "";
       try { bg = getComputedStyle(node).backgroundImage || ""; } catch (e) {}
       var m = /url\((['"]?)(.*?)\1\)/.exec(bg || "");
@@ -698,7 +701,7 @@
   function isAwUi(el) {
     if (!el) return false;
     if (el.id && String(el.id).indexOf("aw-sm") === 0) return true;
-    return !!(el.closest && (el.closest("#aw-sm-root") || el.closest("#aw-sm-zoom") || el.closest("#aw-sm-hl")));
+    return !!(el.closest && (el.closest("#aw-sm-root") || el.closest("#aw-sm-zoom") || el.closest("#aw-sm-hl") || el.closest("#aw-sm-scalpel")));
   }
 
   function pointInEl(el, x, y) {
@@ -825,6 +828,11 @@
     map[host] = true;
     settings.pierceHosts = map;
     try { chrome.storage.local.set({ pierceHosts: map }); } catch (e2) {}
+    pageLog("pierce", "pierce-remember", "site added to the look-under list", {
+      where: "rememberPierceHost",
+      written: false,
+      steps: ["host=" + host]
+    });
     toast(tr("pierceSaved"));
   }
 
@@ -864,9 +872,19 @@
     if (mode === "off") return null;
     var key = missKey(x, y);
     if (fromSave) saveMiss[key] = (saveMiss[key] || 0) + 1;
-    var deep = mode === "on" || pierceHostOn() || (fromSave && saveMiss[key] >= 3);
+    var bySite = pierceHostOn();
+    var deep = bySite || (fromSave && saveMiss[key] >= 3);
     if (!deep) return null;
     el = pierceAt(x, y);
+    if (fromSave) {
+      pageLog("pierce", el ? "pierce-hit" : "pierce-miss",
+        el ? "auto look-under found media below an overlay" : "auto look-under found nothing", {
+          where: "pickMedia",
+          written: false,
+          tag: el ? el.tagName : "",
+          steps: ["mode=" + mode, "siteRemembered=" + bySite, "missesHere=" + (saveMiss[key] || 0)]
+        });
+    }
     if (el && fromSave && saveMiss[key] >= 3) rememberPierceHost();
     return el;
   }
@@ -877,9 +895,10 @@
       if (!mine()) return;
       lastMouse.x = e.clientX;
       lastMouse.y = e.clientY;
+      mouseKnown = true;
       try {
         if (zoomOn) return;
-        if (menuOpen || !settings.enabled) return;
+        if (menuOpen || scalpel.isOpen() || !settings.enabled) return;
         var hit = null;
         try { hit = document.elementFromPoint(e.clientX, e.clientY); } catch (e2) {}
         if (isInteractive(hit)) {
@@ -1157,7 +1176,8 @@
     return true;
   }
 
-  function doSave() {
+  /* target: optional element chosen by hand (Layer Scalpel); skips pointer picking. */
+  function doSave(target) {
     if (saveBusy) {
       pageLog("save failed", "save-busy", "a save in this frame is already running", {
         where: "doSave",
@@ -1166,16 +1186,16 @@
       });
       return true;
     }
-    var el = currentEl || imgEl;
+    var el = target || currentEl || imgEl;
     if (!el) el = pickMedia(lastMouse.x, lastMouse.y, true);
-    var big = largerUnder(lastMouse.x, lastMouse.y, el);
+    var big = target ? null : largerUnder(lastMouse.x, lastMouse.y, el);
     if (big) el = big;
     var onVid = onVideoEl(el);
     if (!el) {
       var pointed = videoElFrom(null);
       if (pointed) { el = pointed; onVid = true; }
     }
-    var url = bestUrl(el) || currentUrl || "";
+    var url = bestUrl(el) || (target ? "" : currentUrl) || "";
     if (!url && el) url = lightUrl(el);
     lastHits = [];
     if (onVid) {
@@ -1934,6 +1954,7 @@
       sub.appendChild(row);
     });
     sub.style.display = "block";
+    keepMenuInView();
   }
 
   function runKey(k) {
@@ -1945,9 +1966,9 @@
       doCopy();
       closeMenu();
     } else if (k === "D") {
-      sendMsg({ type: "openShortcuts" });
-      toast(tr("hotkeys"));
       closeMenu();
+      hideHl();
+      scalpel.open();
     } else if (k === "S") {
       openSub();
     } else if (k === "Q") {
@@ -2018,6 +2039,7 @@
       sub.appendChild(row);
     }
     sub.style.display = "block";
+    keepMenuInView();
   }
 
   function openQ() {
@@ -2082,6 +2104,31 @@
     });
   }
 
+  /* Layer Scalpel (main/scalpel.js): manual look-under, saved through doSave. */
+  function scalpelMedia(el) {
+    return isMediaEl(el) || !!bgUrl(el, 1);
+  }
+
+  var scalpel = window.AW_SCALPEL ? window.AW_SCALPEL.create({
+    tr: tr,
+    toast: toast,
+    isAwUi: isAwUi,
+    isMedia: scalpelMedia,
+    log: function (code, why, extra) {
+      extra = extra || {};
+      pageLog("scalpel", code, why, { where: "scalpel", written: false, steps: extra.steps || [] });
+    },
+    save: function (el, info) {
+      pageLog("scalpel", "scalpel-save", "Layer Scalpel save on layer " + info.depth + " of " + info.layers, {
+        where: "scalpel",
+        written: false,
+        tag: el.tagName || "",
+        steps: ["target=" + info.tag].concat(info.above.map(function (a) { return "above: " + a; }))
+      });
+      doSave(el);
+    }
+  }) : { open: function () {}, close: function () {}, isOpen: function () { return false; }, save: function () {} };
+
   function showMenu(x, y) {
     injectCss();
     closeMenu();
@@ -2103,16 +2150,7 @@
       "</div>";
     document.documentElement.appendChild(menuRoot);
     var cluster = menuRoot.querySelector(".aw-cluster");
-    var w = 186;
-    var h = 118;
-    var left = x - w / 2;
-    var top = y - h / 2;
-    if (left < 4) left = 4;
-    if (top < 4) top = 4;
-    if (left + w > innerWidth - 4) left = innerWidth - w - 4;
-    if (top + h > innerHeight - 4) top = innerHeight - h - 4;
-    cluster.style.left = left + "px";
-    cluster.style.top = top + "px";
+    centerClusterAt(cluster, x, y);
     var cells = menuRoot.querySelectorAll(".aw-cell");
     for (var i = 0; i < cells.length; i++) {
       cells[i].addEventListener("click", function (e) {
@@ -2159,15 +2197,46 @@
     }, altHoldMs());
   }
 
-  function placeCluster(cluster, w, h, x, y, under) {
-    var left = x - w / 2;
-    var top = under ? y + 10 : y - h / 2;
-    if (left < 4) left = 4;
-    if (top < 4) top = 4;
-    if (left + w > innerWidth - 4) left = Math.max(4, innerWidth - w - 4);
-    if (top + h > innerHeight - 4) top = Math.max(4, innerHeight - h - 4);
-    cluster.style.left = left + "px";
-    cluster.style.top = top + "px";
+  /* Menu placement: the menu's center goes to the pointer, clamped to the viewport. */
+  var MENU_EDGE = 4;
+
+  function menuAnchor() {
+    if (mouseKnown) return { x: lastMouse.x, y: lastMouse.y };
+    var v = viewSize();
+    return { x: v.w / 2, y: v.h / 2 };
+  }
+
+  function viewSize() {
+    var de = document.documentElement;
+    return {
+      w: (de && de.clientWidth) || innerWidth,
+      h: (de && de.clientHeight) || innerHeight
+    };
+  }
+
+  function clampAxis(start, size, view) {
+    if (start + size > view - MENU_EDGE) start = view - size - MENU_EDGE;
+    if (start < MENU_EDGE) start = MENU_EDGE;
+    return start;
+  }
+
+  function centerClusterAt(cluster, x, y) {
+    if (!cluster) return;
+    cluster.style.left = "0px";
+    cluster.style.top = "0px";
+    var r = cluster.getBoundingClientRect();
+    var v = viewSize();
+    cluster.style.left = Math.round(clampAxis(x - r.width / 2, r.width, v.w)) + "px";
+    cluster.style.top = Math.round(clampAxis(y - r.height / 2, r.height, v.h)) + "px";
+  }
+
+  function keepMenuInView() {
+    var cluster = menuRoot && menuRoot.querySelector(".aw-cluster");
+    if (!cluster) return;
+    var r = cluster.getBoundingClientRect();
+    var v = viewSize();
+    cluster.style.left = Math.round(clampAxis(r.left, r.width, v.w)) + "px";
+    cluster.style.top = Math.round(clampAxis(r.top, r.height, v.h)) + "px";
   }
 
   function showAltMenu() {
@@ -2203,9 +2272,8 @@
     }
     html += "</div>";
     cluster.innerHTML = html;
-    var w = Math.round(216 * scale);
-    var h = Math.round(140 * scale);
-    placeCluster(cluster, w, h, lastMouse.x, lastMouse.y, true);
+    var at = menuAnchor();
+    centerClusterAt(cluster, at.x, at.y);
     sendMsg({ type: "tabAction", action: "info" }, function (info) {
       var lab = cluster.querySelector(".pin-lab");
       if (lab && info && info.ok) lab.textContent = info.pinned ? "unpin" : "pin";
@@ -2253,6 +2321,10 @@
   document.addEventListener("aw-sm-key", function (ev) {
     if (!mine() || !settings.enabled) return;
     var d = ev.detail || {};
+    if (scalpel.isOpen()) {
+      if (d.kind === "up") scalpel.save();
+      return;
+    }
     if (d.kind === "down") {
       sendMsg({ type: "saveHold" }, function () {});
       pageLog("key", "key-page-down", "page saw the save key", {
@@ -2292,7 +2364,8 @@
         written: false,
         key: "code=" + (d.code || "")
       });
-      showMenu(lastMouse.x, lastMouse.y);
+      var at = menuAnchor();
+      showMenu(at.x, at.y);
       return;
     }
     if (d.kind === "up") {
@@ -2345,7 +2418,8 @@
     holdTimer = setTimeout(function () {
       if (id !== holdId || !holdArmed) return;
       holdOpened = true;
-      showMenu(lastMouse.x, lastMouse.y);
+      var at = menuAnchor();
+      showMenu(at.x, at.y);
     }, holdMs());
   }
 

@@ -6,6 +6,20 @@
   window.__AW_TABCYCLE_CS = true;
 
   var last = 0;
+  var wheelOn = true;
+
+  function readSetting() {
+    try {
+      chrome.storage.sync.get({ viewerWheelTabs: true }, function (r) {
+        try { void chrome.runtime.lastError; } catch (e) {}
+        wheelOn = !r || r.viewerWheelTabs !== false;
+      });
+      chrome.storage.onChanged.addListener(function (ch, area) {
+        if (area === "sync" && ch.viewerWheelTabs) wheelOn = ch.viewerWheelTabs.newValue !== false;
+      });
+    } catch (e) {}
+  }
+  readSetting();
 
   function alive() {
     try { return !!(chrome.runtime && chrome.runtime.id); } catch (e) { return false; }
@@ -62,6 +76,7 @@
     "wheel",
     function (e) {
       if (!alive()) return;
+      if (!wheelOn) return;
       if (blocked()) return;
       if (!shouldCycle()) return;
       e.preventDefault();
