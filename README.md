@@ -6,6 +6,10 @@
 ____________________________________________________________
 > [Chrome web store](https://chromewebstore.google.com/detail/awfsavemaster/nlnfkeiodggocfnlfceihjmilojliija)
 
+> [How to use (EN)](https://2bitewolf.github.io/awf_saveMaster/howto-en/) · [PDF](https://2bitewolf.github.io/awf_saveMaster/howToUse_EN.pdf)
+
+> [Как пользоваться (RU)](https://2bitewolf.github.io/awf_saveMaster/howto-ru/) · [PDF](https://2bitewolf.github.io/awf_saveMaster/howToUse_RU.pdf)
+
 > [License](https://2bitewolf.github.io/awf_saveMaster/lic-en/)
 
 > [Privacy policy](https://2bitewolf.github.io/awf_saveMaster/priv-en/)
